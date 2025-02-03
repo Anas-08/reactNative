@@ -1,0 +1,78 @@
+
+ const [gender, setGender] = useState([
+        {
+            id: 1,
+            value: "male",
+            isChecked: false
+        },
+        {
+            id: 2,
+            value: "female",
+            isChecked: false
+        },
+        {
+            id: 3,
+            value: "others",
+            isChecked: false
+        },
+    ])
+
+        const handleRadioChange = (ind) => {
+            const updatedRadio =
+            gender.map((value, index) => ({
+                    ...value,    
+                    isChecked: index === ind,
+                }));
+                // console.log();
+                console.log(ind, updatedRadio)
+                setGender(updatedRadio);
+        };
+
+         <View>
+      <View style={styles.radioGroup}>
+            {
+                data.map((value, index) => (
+                    <View key={index}>
+                        <TouchableOpacity
+                            style={styles.radiobtn}
+                            onPress={() => handleChange(index)}
+                        >
+                            <View style={styles.radioCircle}>
+                                {
+                                    value.isChecked ? <View style={styles.radioCircleSelected} /> : null
+                                }
+                            </View>
+                            <Text >{value.value}</Text>
+                        </TouchableOpacity>
+                    </View>
+                ))
+            }
+        </View>
+    </View>\
+
+    //
+
+      const [gender, setGender] = useState([
+        {
+            id: 1,
+            value: "male",
+            isChecked: false
+        },
+        {
+            id: 2,
+            value: "female",
+            isChecked: false
+        },
+        {
+            id: 3,
+            value: "others",
+            isChecked: false
+        },
+    ])
+    
+     function handleUpdate(data, index){
+
+         const gen = gender.filter((item) => data.gender === item.value ).map((item)=>{
+             (item.isChecked= true)
+         })
+     }
