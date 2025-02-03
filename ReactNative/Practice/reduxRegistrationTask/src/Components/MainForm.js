@@ -288,6 +288,34 @@ const MainForm = () => {
         // console.log(ind);
     };
 
+    // const handleRadioChange = (ind) => {
+    //     const updatedRadio = gender.reduce((acc, item, index) => {
+    //       acc.push({
+    //         ...item,
+    //         isChecked: index === ind,
+    //       });
+    //       return acc;
+    //     }, []);
+      
+    //     setGender(updatedRadio);
+    //     // console.log(ind);
+    //   };
+
+    // const handleRadioChange = (ind) => {
+    //     const updatedRadio = [...gender]; // Create a shallow copy of the gender array
+      
+    //     for (let i = 0; i < updatedRadio.length; i++) {
+    //       if (i === ind) {
+    //         updatedRadio[i].isChecked = true;
+    //       } else {
+    //         updatedRadio[i].isChecked = false;
+    //       }
+    //     }
+      
+    //     setGender(updatedRadio);
+    //     // console.log(ind);
+    //   };
+
     // handle checkbox change
     const handleCheckBoxChange = (ind) => {
         const updatedCheck = hobby.map((value, index) => ({

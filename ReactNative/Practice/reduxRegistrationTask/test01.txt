@@ -1,0 +1,153 @@
+import { View, Text, Pressable, StyleSheet } from 'react-native';
+import React from 'react';
+
+const UserCard = ({ user, index, handleDelete, handleEdit }) => {
+  return (
+    <View style={styles.card}>
+      <View>
+        <Text>Id: {index}</Text>
+        <Text>Firstname: {user.firstName}</Text>
+        <Text>MiddleName: {user.middleName}</Text>
+        <Text>LastName: {user.lastName}</Text>
+        <Text>Email: {user.email}</Text>
+        <Text>Username: {user.username}</Text>
+        <Text>Password: {user.password}</Text>
+        <Text>Gender: {user.gender}</Text>
+        <Text>Hobbies: {user.hobbies.join(', ')}</Text>
+      </View>
+      <View>
+        <Pressable style={[styles.button, { backgroundColor: 'tomato' }]} onPress={() => handleDelete(index)}>
+          <Text>Delete</Text>
+        </Pressable>
+        <Pressable style={[styles.button, { backgroundColor: 'skyblue' }]} onPress={() => handleEdit(user, index)}>
+          <Text>Edit</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
+};
+
+export default UserCard;
+
+const styles = StyleSheet.create({
+  card: {
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 6,
+    margin: 12,
+    padding: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  button: {
+    marginVertical: 5,
+    padding: 8,
+    borderRadius: 6,
+    alignItems: 'center',
+  },
+});
+
+
+// 
+
+import { ScrollView, Text, Switch, View, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addUser, deleteUser, editUser } from '../Redux/Reducers/registrationReducer';
+
+import CustomInput from './CustomInput';
+import CustomButton from './CustomButton';
+import Radio from './Radio';
+import Checkbox from './Checkbox';
+import UserCard from './UserCard';
+
+const MainForm = () => {
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.registration.userDataArray);
+
+  const [value, setValue] = useState({
+    firstName: '',
+    middleName: '',
+    lastName: '',
+    email: '',
+    username: '',
+    password: '',
+    cPassword: '',
+    gender: '',
+    hobbies: [],
+  });
+
+  const [gender, setGender] = useState([
+    { id: 1, value: 'male', isChecked: false },
+    { id: 2, value: 'female', isChecked: false },
+    { id: 3, value: 'others', isChecked: false },
+  ]);
+
+  const [hobby, setHobby] = useState([
+    { id: 1, value: 'music', isChecked: false },
+    { id: 2, value: 'dancing', isChecked: false },
+    { id: 3, value: 'reading', isChecked: false },
+  ]);
+
+  const [editIndex, setEditIndex] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleChange = (text, name) => setValue({ ...value, [name]: text });
+
+  const handleSubmit = () => {
+    const selectedGender = gender.find((g) => g.isChecked)?.value;
+    const selectedHobbies = hobby.filter((h) => h.isChecked).map((h) => h.value);
+
+    const userData = { ...value, gender: selectedGender, hobbies: selectedHobbies };
+
+    if (isEditing) {
+      dispatch(editUser(userData, editIndex));
+      setIsEditing(false);
+      setEditIndex(null);
+    } else {
+      dispatch(addUser(userData));
+    }
+
+    resetForm();
+  };
+
+  const handleEdit = (user, index) => {
+    setValue(user);
+    setEditIndex(index);
+    setIsEditing(true);
+    setGender(gender.map((g) => ({ ...g, isChecked: g.value === user.gender })));
+    setHobby(hobby.map((h) => ({ ...h, isChecked: user.hobbies.includes(h.value) })));
+  };
+
+  const handleDelete = (index) => dispatch(deleteUser(index));
+
+  const resetForm = () => {
+    setValue({ firstName: '', middleName: '', lastName: '', email: '', username: '', password: '', cPassword: '', gender: '', hobbies: [] });
+    setGender(gender.map((g) => ({ ...g, isChecked: false })));
+    setHobby(hobby.map((h) => ({ ...h, isChecked: false })));
+  };
+
+  return (
+    <ScrollView>
+      <Text style={styles.heading}>Registration Form</Text>
+
+      <CustomInput label="First Name" name="firstName" value={value.firstName} handleChange={handleChange} placeholder="Enter first name" />
+      <CustomInput label="Middle Name" name="middleName" value={value.middleName} handleChange={handleChange} placeholder="Enter middle name" />
+      <CustomInput label="Last Name" name="lastName" value={value.lastName} handleChange={handleChange} placeholder="Enter last name" />
+      <CustomInput label="Email" name="email" value={value.email} handleChange={handleChange} placeholder="Enter email" />
+      <CustomInput label="Username" name="username" value={value.username} handleChange={handleChange} placeholder="Enter username" />
+      <CustomInput label="Password" name="password" value={value.password} handleChange={handleChange} placeholder="Enter password" secure />
+
+      <Radio data={gender} handleChange={setGender} />
+      <Checkbox data={hobby} handleChange={setHobby} />
+
+      <CustomButton title={isEditing ? 'Update' : 'Submit'} onPress={handleSubmit} backgroundColor="lightgrey" />
+
+      {users.map((user, index) => <UserCard key={index} user={user} index={index} handleDelete={handleDelete} handleEdit={handleEdit} />)}
+    </ScrollView>
+  );
+};
+
+export default MainForm;
+
+const styles = StyleSheet.create({ heading: { fontSize: 22, textAlign: 'center' } });
