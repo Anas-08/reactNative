@@ -1,0 +1,5 @@
+git add .
+git commit -m "initial commit for react native"
+git branch -M main
+git remote add origin https://github.com/Anas-08/reactNative.git
+git push -u origin main
