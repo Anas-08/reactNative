@@ -6,12 +6,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addUser, deleteUser, displayData, editUser, submitData } from '../Redux/Reducers/registrationReducer'
 import Radio from './Radio'
 import Checkbox from './Checkbox'
+import DisplayFlat from './DisplayFlatList'
+import DatePickerInput from './DatePickerInput'
 
 const MainForm = () => {
 
     const dispatch = useDispatch()
-    const selector = useSelector((state) => state.registration.userDataArray)
-    console.log("intial slector -> ", selector)
+    const userData = useSelector((state) => state.registration.userDataArray)
+    // console.log("intial slector -> ", selector)
 
     // all common value to get from the user
     const [value, setValue] = useState({
@@ -24,7 +26,7 @@ const MainForm = () => {
         cPassword: "",
         gender: "",
         hobbies: [],
-        // dob: "",
+        dob: "",
     })
 
     // for gender selection
@@ -78,36 +80,15 @@ const MainForm = () => {
     // const [editId, setEditId] = useState()
     const [id, setId] = useState(null)
     const [isSet, setIsSet] = useState(false)
+    const [isEnabled, setIsEnabled] = useState(false)
+
     // for handling the user input
     const handleChange = (text, inputFieldName) => {
         console.log(text, inputFieldName)
         setValue((previousValue) => ({ ...previousValue, [inputFieldName]: text }))
     }
 
-    // function handleSubmit() {
-    //     if (isSet) {
-    //         handleUpdateSubmit();
-    //     } else {
-    //         insertUser();
-    //     }
-    // }
-
-    // function handleSubmit() {
-    //     if (isSet) {
-    //         handleUpdateSubmit();
-    //     } else {
-    //         insertUser();
-    //     }
-    // }
-
     function handleSubmit() {
-        // console.log("useState obje value ---> ", value)
-        // if(!id){
-        //     insertUser()
-        // }else{
-        //     handleUpdateSubmit()
-        //     setId(null)
-        // }
         if(!isSet){
             insertUser()
         }else{
@@ -137,9 +118,11 @@ const MainForm = () => {
              cPassword: "",
              gender: "",
              hobbies: [],
+             dob: "",
          })
          setGender(gender.map((value) => ({ ...value, isChecked: false })))
          setHobby(hobby.map((value) => ({ ...value, isChecked: false })))
+         setIsEnabled(!isEnabled)
         //  console.log("selector value --> ", selector)
     }
 
@@ -332,7 +315,6 @@ const MainForm = () => {
 
         <Text style={styles.heading}>Registration Redux </Text>
         <View>
-          <Text style={[styles.common]}>First Name : </Text>
           <CustomInputTextbox
             style={styles.border}
             handleChange={handleChange}
@@ -343,7 +325,6 @@ const MainForm = () => {
         </View>
 
         <View>
-          <Text style={[styles.common]}>Middle Name : </Text>
           <CustomInputTextbox
             style={styles.border}
             handleChange={handleChange}
@@ -354,7 +335,6 @@ const MainForm = () => {
         </View>
 
         <View>
-          <Text style={[styles.common]}>Last Name : </Text>
           <CustomInputTextbox
             style={styles.border}
             handleChange={handleChange}
@@ -365,7 +345,6 @@ const MainForm = () => {
         </View>
 
         <View>
-          <Text style={[styles.common]}>Email: </Text>
           <CustomInputTextbox
             style={styles.border}
             handleChange={handleChange}
@@ -376,7 +355,6 @@ const MainForm = () => {
         </View>
 
         <View>
-          <Text style={[styles.common]}>Username: </Text>
           <CustomInputTextbox
             style={styles.border}
             handleChange={handleChange}
@@ -387,7 +365,6 @@ const MainForm = () => {
         </View>
 
         <View>
-          <Text style={[styles.common]}>Password: </Text>
           <CustomInputTextbox
             style={styles.border}
             handleChange={handleChange}
@@ -399,7 +376,6 @@ const MainForm = () => {
         </View>
 
         <View>
-          <Text style={[styles.common]}>Confirm Password: </Text>
           <CustomInputTextbox
             style={styles.border}
             handleChange={handleChange}
@@ -409,6 +385,14 @@ const MainForm = () => {
             secure="true"
           />
         </View>
+
+
+      <View>
+        <DatePickerInput
+          handleChange={handleChange}
+          value={value.dob}
+        />
+      </View>
 
         <View>
           <Text style={[styles.common]}>Select Gender: </Text>
@@ -421,46 +405,16 @@ const MainForm = () => {
         </View>
 
         <View>
-          {/* <TouchableOpacity
-                        style={[styles.border, { backgroundColor: "skyblue" }]}
-                        onPress={handleSubmit}
-                    >
-                        <Text style={[styles.center]} >{!id ? "Insert" : "Update"}</Text>
-                    </TouchableOpacity> */}
-          {/* <TouchableOpacity
-                                style={[styles.border, { alignItems: "center", backgroundColor: "lightgrey" }]}
-                                onPress={!id ? insertUser : handleUpdateSubmit}
-                            >
-                                {!id ? <Text>Submit</Text> : <Text>Update</Text>}
-                    </TouchableOpacity> */}
-
-          {/* <TouchableOpacity
-            style={[
-              styles.border,
-              {alignItems: 'center', backgroundColor: 'lightgrey'},
-            ]}
-            onPress={handleSubmit}>
-            <Text>{isSet ? 'Update' : 'Submit'}</Text>
-          </TouchableOpacity> */}
-
           <TouchableOpacity
             style={[
               styles.border,
               {alignItems: 'center', backgroundColor: 'lightgrey'},
             ]}
-            onPress={!isSet ? handleSubmit : handleUpdateSubmit}>
+            // onPress={!isSet ? handleSubmit : handleUpdateSubmit}
+            onPress={handleSubmit}>
             {!isSet ? <Text>Submit</Text> : <Text>Edit</Text>}
           </TouchableOpacity>
         </View>
-
-        {/* <View>
-            <TouchableOpacity
-                style={[styles.border, { backgroundColor: "skyblue" }]}
-                onPress={dispatch(displayData())}
-            >
-                <Text style={[styles.center]} >Display</Text>
-            </TouchableOpacity>
-        </View> */}
 
         <View
           style={{
@@ -469,50 +423,23 @@ const MainForm = () => {
             alignItems: 'center',
             justifyContent: 'space-around',
           }}>
-          <Switch />
+          <Switch
+            value={isEnabled}
+            onValueChange={() => setIsEnabled(!isEnabled)}
+          />
           <Text>I agree to terms & conditions </Text>
         </View>
 
-        {selector.map((user, index) => (
-          <>
-            <View
-              key={index}
-              style={[
-                styles.border,
-                {
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                },
-              ]}>
-              <View>
-                <Text>Id : {index}</Text>
-                <Text>firstname: {user.firstName}</Text>
-                <Text>middleName: {user.middleName}</Text>
-                <Text>lastName: {user.lastName}</Text>
-                <Text>email: {user.email}</Text>
-                <Text>username: {user.username}</Text>
-                <Text>password: {user.password}</Text>
-                <Text>gender: {user.gender}</Text>
-                <Text>hobbies: {user.hobbies.join(', ')}</Text>
-                {/* <Text>date: {user.dob}</Text> */}
-              </View>
-              <View>
-                <Pressable
-                  style={[styles.border, {backgroundColor: 'tomato'}]}
-                  onPress={() => handleDelete(index)}>
-                  <Text>Delete</Text>
-                </Pressable>
-                <Pressable
-                  style={[styles.border, {backgroundColor: 'skyblue'}]}
-                  onPress={() => handleEdit(user, index)}>
-                  <Text>Edit</Text>
-                </Pressable>
-              </View>
-            </View>
-          </>
-        ))}
+        <View>
+          <DisplayFlat
+            data={userData}
+            style={[styles.border]}
+            handleEdit={handleEdit}
+            handleDelete={handleDelete}
+          />
+          {/* <DisplayData data={userData} style={styles.border} handleEdit={handleEdit} handleDelete={handleDelete} /> */}
+          {/* <DisplayData data={selector} style={styles.border} handleEdit={handleEditDispatch} handleDelete={handleDelete} /> */}
+        </View>
 
         {/* </SafeAreaView> */}
       </ScrollView>
@@ -536,11 +463,20 @@ const styles = StyleSheet.create({
     border: {
         borderStyle: "solid",
         borderColor: "black",
-        borderWidth: 1,
+        // borderWidth: 1,
+        borderBottomWidth: 1,
         borderRadius: 6,
         margin: 12,
         padding: 12
     },
+    button: {
+      borderStyle: "solid",
+      borderColor: "black",
+      borderWidth: 1,
+      borderRadius: 6,
+      margin: 12,
+      padding: 12
+  },
     commonFlex: {
         display: "flex",
         flexDirection: "row",
