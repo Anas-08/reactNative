@@ -94,12 +94,7 @@ const DatePickerInput = ({ handleChange, value }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={showDatePicker} style={styles.iconContainer}>
-        <Image
-          source={require('../public/images/datepicker_icon_32x32.png')}
-          style={styles.icon}
-        />
-      </TouchableOpacity>
+    
       <TextInput
         style={styles.input}
         value={date.toISOString().split('T')[0]} // Display date as YYYY-MM-DD
@@ -115,6 +110,12 @@ const DatePickerInput = ({ handleChange, value }) => {
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
       />
+        <TouchableOpacity onPress={showDatePicker} style={styles.iconContainer}>
+        <Image
+          source={require('../public/images/datepicker_icon_32x32.png')}
+          style={styles.icon}
+        />
+      </TouchableOpacity>
     </View>
   );
 };

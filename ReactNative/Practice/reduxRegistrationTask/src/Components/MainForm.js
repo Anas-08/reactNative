@@ -1,4 +1,4 @@
-import { Alert, Pressable, SafeAreaView, ScrollView, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, Pressable, SafeAreaView, ScrollView, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import CustomInputTextbox from './CustomInputTextbox'
 
@@ -7,7 +7,8 @@ import { addUser, deleteUser, displayData, editUser, submitData } from '../Redux
 import Radio from './Radio'
 import Checkbox from './Checkbox'
 import DisplayFlat from './DisplayFlatList'
-import DatePickerInput from './DatePickerInput'
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+// import DatePickerInput from './DatePickerInput'
 
 const MainForm = () => {
 
@@ -82,6 +83,32 @@ const MainForm = () => {
     const [isSet, setIsSet] = useState(false)
     const [isEnabled, setIsEnabled] = useState(false)
 
+    // handling date
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const [selectedDate, setSelectedDate] = useState('');
+
+    const showDatePicker = () => {
+        setDatePickerVisibility(true);
+    };
+
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false);
+    };
+
+    const handleConfirm = (date) => {
+        const today = new Date()
+        if (date > today) {
+            Alert.alert("Date", "can't greater than today")
+            hideDatePicker()
+            return;
+        }
+        setSelectedDate(date.toDateString());
+        handleChange(date.toDateString(), "dob")
+        hideDatePicker();
+    };
+    
+    // handling date end
+
     // for handling the user input
     const handleChange = (text, inputFieldName) => {
         console.log(text, inputFieldName)
@@ -123,6 +150,7 @@ const MainForm = () => {
          setGender(gender.map((value) => ({ ...value, isChecked: false })))
          setHobby(hobby.map((value) => ({ ...value, isChecked: false })))
          setIsEnabled(!isEnabled)
+         setSelectedDate("")
         //  console.log("selector value --> ", selector)
     }
 
@@ -180,12 +208,13 @@ const MainForm = () => {
             cPassword: data.cPassword,
             gender: data.gender,
             hobbies: [],
-            // dob: data.dob,
+            dob: data.dob,
         })
         // setIsSet(true)
        // console.log("before set edit index(id) -----------------> ", index)
         setId(index)
         setIsSet(true) // 
+        setSelectedDate(data.dob)
        // console.log("after set edit index(id) -----------------> ", index)
     }
 
@@ -251,7 +280,7 @@ const MainForm = () => {
             })
             setGender(gender.map((value) => ({ ...value, isChecked: false })))
             setHobby(hobby.map((value) => ({ ...value, isChecked: false })))
-            // setSelectedDate(null)
+            setSelectedDate("")
 
             setIsSet(!isSet)
 
@@ -386,13 +415,30 @@ const MainForm = () => {
           />
         </View>
 
+        <View style={[styles.commonFlex,styles.border, { justifyContent: "space-between" }]} >
+          <View><Text>{selectedDate}</Text></View>
+            <Pressable onPress={showDatePicker}>
+              <Image
+                source={require('../public/images/datepicker_icon_32x32.png')}
+              />
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date" // 'date', 'time', or 'datetime'
+                onConfirm={handleConfirm}
+                onCancel={hideDatePicker}
+              />
+              
+            </Pressable>
+          </View>
+     
 
+        {/* 
       <View>
         <DatePickerInput
           handleChange={handleChange}
           value={value.dob}
         />
-      </View>
+      </View> */}
 
         <View>
           <Text style={[styles.common]}>Select Gender: </Text>

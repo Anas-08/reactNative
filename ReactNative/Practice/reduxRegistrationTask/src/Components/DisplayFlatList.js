@@ -16,7 +16,7 @@ const DisplayFlat = (props) => {
                     <Text>password: {item.password}</Text>
                     <Text>gender: {item.gender}</Text>
                     <Text>hobbies: {item.hobbies.join(", ")}</Text>
-                    {/* <Text>date: {user.dob}</Text> */}
+                    <Text>date: {item.dob}</Text>
                 </View>
                 <View >
                     <Pressable style={[props.style, { backgroundColor: "tomato" }]} onPress={() => props.handleDelete(index)} >
