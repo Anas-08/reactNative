@@ -1,0 +1,282 @@
+// Action
+import axios from "axios";
+import { GET_TODOS, ADD_TODO, UPDATE_TODO, DELETE_TODO } from "../../Types/todo/todoTypes";
+
+const API_URL = 'https://dummyjson.com/todos'
+
+export const getTodos = () => async (dispatch) => {
+    const response = await fetch(API_URL);
+    const data = await response.json();
+    dispatch({
+      type: GET_TODOS,
+      payload: data.todos,
+    });
+  };
+
+  export function addTodo(newData){
+    console.log("get from the dispatch method from user ---> ", newData)
+    return async function(dispatch){
+
+      const response = await fetch(`${API_URL}/${"add"}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            // body: JSON.stringify(todo),
+            body: JSON.stringify({
+              id: Date.now(), 
+              todo: newData,
+              completed: false,
+              userId: 100,
+            }),
+          });
+          console.log("response post fetch ----> ", response)
+          const data = await response.json()
+          console.log("response post fetch data ----> ", data)
+
+
+      dispatch({ type: ADD_TODO, payload: data })
+    }
+  }
+
+export const updateTodo = (id, updatedTodo) => async (dispatch) => {
+  console.log("from update action ---> ", id, updatedTodo)
+  console.log("API ---> ", `${API_URL}/${id}`)
+
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      todo: updatedTodo,
+    }),
+  })
+  console.log("response ---> ", response)
+  const data = await response.json();
+  console.log("data response ----> ", data)
+  dispatch({
+    type: UPDATE_TODO,
+    payload: updatedTodo,
+  })
+}
+
+export function deleteTodo(id){
+  return async function(dispatch){
+    await fetch(`${API_URL}/${id}`, {
+      method: 'DELETE',
+    })
+    dispatch({ type: DELETE_TODO, payload: id })
+  }
+}
+
+// export function getSecondApiProducts() {
+//     return async (dispatch,getState)=>{
+//         const response = await fetch('https://dummyjson.com/products');
+//         const data = await response.json();
+//         dispatch({ type: GET_SECOND_API_PRODUCTS, payload:  data.products });
+//     }
+// }
+
+
+// reducer
+// types
+
+import { ADD_TODO, DELETE_TODO, GET_TODOS, UPDATE_TODO } from "../../Types/todo/todoTypes";
+
+const initialState = {
+    todos: []
+}
+
+export default function todosReducer(state = initialState, action){
+    switch (action.type) {
+      case GET_TODOS:
+        return {
+          ...state,
+          todos: action.payload,
+        };
+      case ADD_TODO:
+        return {
+          ...state,
+          todos: [...state.todos, action.payload],
+        };
+      case UPDATE_TODO:
+        return {
+          ...state,
+          todos: state.todos.map((todo) =>
+            todo.id === action.payload.id ? action.payload : todo
+          ),
+        };
+      case DELETE_TODO:
+        // return {
+        //   ...state,
+        //   todos: state.todos.filter((todo) => todo.id !== action.payload),
+        // };
+        return {
+          ...state, 
+          todos: state.todos.filter((todo) => todo.id !== action.payload)
+        }
+
+      default:
+        return state;
+    }
+  };
+
+  // types
+
+  export const GET_TODOS = 'GET_TODOS';
+export const ADD_TODO = 'ADD_TODO';
+export const UPDATE_TODO = 'UPDATE_TODO';
+export const DELETE_TODO = 'DELETE_TODO';
+
+
+// store
+// store file
+
+import { applyMiddleware, combineReducers, createStore } from "redux";
+import registrationFormReducer from "./Reducers/registration/registrationReducer"
+import productReducer from "./Reducers/product/productReducer";
+import {thunk} from "redux-thunk";
+import { apiMiddleware, fetchSecondProductsMiddleware } from "./middleware/productApiMiddleware";
+import secondApiProductReducer from "./Reducers/secondApiProduct/secondApiProduct";
+import todosReducer from "./Reducers/todo/todoReducer";
+
+
+console.log("thunk ---> ", thunk )
+
+
+const rootReducers = combineReducers({
+    registration: registrationFormReducer,
+    product: productReducer,
+    secondProduct: secondApiProductReducer,
+    todos: todosReducer,
+})
+
+// const reduxStore = createStore(rootReducers, applyMiddleware(thunk, apiMiddleware))
+const reduxStore = createStore(rootReducers, applyMiddleware(thunk))
+
+export default reduxStore
+
+
+
+// todoscreen
+
+import { View, Text, FlatList, TouchableOpacity, TextInput, Alert } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { addTodo, deleteTodo, getTodos, updateTodo } from '../../Redux/Actions/todo/todoAction'
+import { commonStyles } from '../../common/style'
+import { styles } from './style'
+
+
+const Todo = () => {
+  const todos = useSelector((state) => state.todos)
+  const dispatch = useDispatch()
+  const [newTodo, setNewTodo] = useState('')
+  const [edit, setEdit] = useState(null)
+  useEffect(() => {
+    dispatch(getTodos())
+  }, [])
+
+  console.log("todos from the reducer ---> ", todos)
+
+  function handleAdd(){
+    console.log("clicked on add ---> ")
+    console.log(newTodo)
+    if(addTodo != ''){
+      dispatch(addTodo(newTodo))
+      setNewTodo('')
+    }
+  }
+
+  function handleTodoDelete(id) {
+    console.log("clicked on delete ---> ", id)
+    Alert.alert('Delete', 'Are you sure you want to delete todo ? ', [
+      {
+        text: 'Cancel',
+      },
+      {
+        text: 'OK',
+        onPress: () => {
+          dispatch(deleteTodo(id))
+        }
+      },
+    ])
+  }
+
+  function handleTodoEdit(id, data){
+    console.log("clicked on Edit id ---> ", id)
+    console.log("clicked on Edit data ---> ", data)
+    setNewTodo(data)
+    setEdit(id)
+  }
+
+  function handleUpdateTodo(){
+    if(setEdit !== null){
+      dispatch(updateTodo(edit, newTodo))
+      setNewTodo('');
+      setEdit(null);
+    }
+  }
+
+  function handleSubmit() {
+    if(edit == null){
+      handleAdd()
+    }else{
+      handleUpdateTodo()
+    }
+  }
+
+  
+//   <button
+//   onClick={editingTodo !== null ? () => handleUpdateTodo(editingTodo) : handleAddTodo}
+// >
+//   {editingTodo !== null ? 'Update Todo' : 'Add Todo'}
+// </button>
+
+{/* <button onClick={() => {
+  setEditingTodo(todo.id);
+  setTodoText(todo.todo);
+}}> */}
+
+  const TodoList = (props) => (
+      <View style={styles.cardProduct}>
+      <Text style={styles.productTitle}>  {props.todos.todo}</Text>
+      <View style={{ flexDirection: "row", justifyContent: "flex-end" }} >
+        <TouchableOpacity style={[styles.button]} onPress={() => { handleTodoEdit(props.todos.id, props.todos.todo) }} >
+          <Text style={[styles.buttonText]} >Edit</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button]} onPress={() => handleTodoDelete(props.todos.id)} >
+          <Text style={[styles.buttonText]} >Delete</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  )
+
+  const renderTodos = ({ item }) => <TodoList todos={item} />
+
+  return (
+    <View style={{ marginBottom: 180 }} >
+      <Text style={[commonStyles.textCenter, commonStyles.paddingUpDown, commonStyles.mediumfont]} >Todos</Text>
+      <View>
+        <TextInput  
+          onChangeText={(e)=> setNewTodo(e)}
+          value={newTodo}
+          style={[styles.border, {borderWidth: 1}]}
+          placeholder='enter a todo '
+        />
+         <TouchableOpacity style={[styles.button]} onPress={handleSubmit} >
+          <Text style={[styles.buttonText]} >{ edit == null ? "Add" : "Update" }</Text>
+        </TouchableOpacity>
+      </View>
+      <FlatList
+        data={todos.todos}
+        renderItem={renderTodos}
+        numColumns={1}
+        style={{ marginBottom: 55 }}
+      />
+    </View>
+  )
+}
+
+export default Todo

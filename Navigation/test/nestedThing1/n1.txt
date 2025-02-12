@@ -1,0 +1,83 @@
+const Tabs = () => {
+return (
+<Tab.Navigator
+  screenOptions={{
+    headerShown: false,
+    tabBarShowLabel: false,
+    tabBarHideOnKeyboard: true,
+  }}
+  barStyle={{ backgroundColor: "white" }}
+>
+  <Tab.Screen
+    name="Trade"
+    component={Trade}
+    options={{
+      tabBarIcon: ({ focused }) => (
+        <TabBarIcon icon="eye" label="Trade" focused={focused} />
+      ),
+    }}
+  />
+  <Tab.Screen
+    name="MyOrders"
+    component={MyOrders}
+    options={{
+      tabBarIcon: ({ focused }) => (
+        <TabBarIcon
+          icon="shopping-bag"
+          label="My Orders"
+          focused={focused}
+        />
+      ),
+    }}
+  />
+  <Tab.Screen
+    name="Transport"
+    component={Trade}
+    options={{
+      tabBarIcon: ({ focused }) => (
+        <TabBarIcon icon="truck" label="Transport" focused={focused} />
+      ),
+    }}
+  />
+  <Tab.Screen
+    name="Transaction"
+    component={Trade}
+    options={{
+      tabBarIcon: ({ focused }) => (
+        <TabBarIcon icon="wallet" label="Transaction" focused={focused} />
+      ),
+    }}
+  />
+  <Tab.Screen
+    name="Profile"
+    component={Trade}
+    options={{
+      tabBarIcon: ({ focused }) => (
+        <TabBarIcon icon="user" label="Profile" focused={focused} />
+      ),
+    }}
+  />
+</Tab.Navigator>
+);
+};
+
+const DrawerStack = () => {
+return (
+<Drawer.Navigator screenOptions={{ headerShown: false }}>
+  {/* <Drawer.Screen name="Trade" component={Trade}></Drawer.Screen>
+  <Drawer.Screen name="MyOrders" component={MyOrders}></Drawer.Screen> */}
+  <Drawer.Screen name="Tabs" component={Tabs}></Drawer.Screen>
+</Drawer.Navigator>
+);
+};
+
+const AppStack = () => {
+return (
+<Stack.Navigator screenOptions={{ headerShown: false }}>
+  <Stack.Screen name="App" component={LoginStack}></Stack.Screen>
+  <Stack.Screen name="HomeScreen" component={DrawerStack}></Stack.Screen>
+</Stack.Navigator>
+);
+};
+
+export default AppStack;
