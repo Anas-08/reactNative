@@ -1,0 +1,151 @@
+import {
+  View,
+  Text,
+  Button,
+  Image,
+  Platform,
+  Alert,
+  Linking,
+} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { check, PERMISSIONS, requestMultiple, RESULTS } from 'react-native-permissions';
+
+const ImagePic = () => {
+  // Define permissions for both Camera & Gallery
+  const permissions = {
+    camera: Platform.OS === 'ios' ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA,
+    gallery: Platform.OS === 'ios' ? PERMISSIONS.IOS.PHOTO_LIBRARY : PERMISSIONS.ANDROID.READ_MEDIA_IMAGES,
+  };
+
+  const [imageUrl, setImageUrl] = useState(null);
+  const [permissionsStatus, setPermissionsStatus] = useState({ camera: null, gallery: null });
+
+  useEffect(() => {
+    checkPermissions();
+  }, []);
+
+  // Function to check multiple permissions
+  const checkPermissions = async () => {
+    const camStatus = await check(permissions.camera);
+    const galStatus = await check(permissions.gallery);
+
+    console.log("Camera Status: ", camStatus);
+    console.log("Gallery Status: ", galStatus);
+
+    setPermissionsStatus({ camera: camStatus, gallery: galStatus });
+  };
+
+  // Function to request multiple permissions at once
+  const requestPermissions = async () => {
+    const statuses = await requestMultiple([permissions.camera, permissions.gallery]);
+    console.log("Permission Statuses: ", statuses);
+
+    setPermissionsStatus({
+      camera: statuses[permissions.camera],
+      gallery: statuses[permissions.gallery],
+    });
+
+    return statuses;
+  };
+
+  // Handle permission results using switch-case
+  const handlePermissionStatus = (status, type) => {
+    switch (status) {
+      case RESULTS.UNAVAILABLE:
+        Alert.alert(`${type} Unavailable`, `This feature is not available on your device.`);
+        return false;
+
+      case RESULTS.GRANTED:
+        console.log(`${type} permission granted`);
+        return true;
+
+      case RESULTS.DENIED:
+        Alert.alert(
+          `Permission Denied`,
+          `You need to allow ${type} access. Please grant permission when prompted.`
+        );
+        return false;
+
+      case RESULTS.LIMITED:
+        Alert.alert(`Limited Access`, `You have granted limited access to ${type}.`);
+        return true;
+
+      case RESULTS.BLOCKED:
+        Alert.alert(
+          `Permission Blocked`,
+          `You have permanently blocked ${type} access. Enable it from settings.`,
+          [
+            { text: 'Cancel', style: 'cancel' },
+            { text: 'Open Settings', onPress: () => Linking.openSettings() },
+          ]
+        );
+        return false;
+
+      default:
+        return false;
+    }
+  };
+
+  // Function to check and request permission before opening the camera
+  const handleImageCamera = async () => {
+    const statuses = await requestPermissions();
+    if (!handlePermissionStatus(statuses[permissions.camera], "Camera")) return;
+
+    launchCamera({ mediaType: 'photo' }, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled camera');
+      } else if (response.errorMessage) {
+        Alert.alert('Error', response.errorMessage);
+      } else {
+        let imageUri = response.assets?.[0]?.uri;
+        setImageUrl(imageUri);
+      }
+    });
+  };
+
+  // Function to check and request permission before opening the gallery
+  const handleImagePicker = async () => {
+    const statuses = await requestPermissions();
+    if (!handlePermissionStatus(statuses[permissions.gallery], "Gallery")) return;
+
+    launchImageLibrary({ mediaType: 'photo' }, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled gallery');
+      } else if (response.errorMessage) {
+        Alert.alert('Error', response.errorMessage);
+      } else {
+        let imageUri = response.assets?.[0]?.uri;
+        setImageUrl(imageUri);
+      }
+    });
+  };
+
+  return (
+    <View>
+      <Text style={{ textAlign: 'center', fontSize: 24, marginVertical: 20 }}>
+        Image Picker
+      </Text>
+
+      <Button title="Choose from Gallery" onPress={handleImagePicker} />
+      <Button title="Open Camera" onPress={handleImageCamera} />
+
+      {imageUrl ? (
+        <View style={{ alignItems: 'center', marginVertical: 12 }}>
+          <Image
+            source={{ uri: imageUrl }}
+            style={{ width: 200, height: 200 }}
+            resizeMode="contain"
+          />
+          <Button title="Reset" onPress={() => setImageUrl(null)} />
+        </View>
+      ) : (
+        <Text style={{ textAlign: 'center', marginVertical: 20 }}>
+          No image selected
+        </Text>
+      )}
+    </View>
+  );
+};
+
+export default ImagePic;

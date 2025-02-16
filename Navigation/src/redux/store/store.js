@@ -6,6 +6,7 @@ import {thunk} from "redux-thunk";
 // import secondApiProductReducer from "./Reducers/secondApiProduct/secondApiProduct";
 
 import todosReducer from "../reducers/todo/todoReducer";
+import productReducer from "../reducers/productList";
 
 
 console.log("thunk ---> ", thunk )
@@ -16,6 +17,8 @@ const rootReducers = combineReducers({
     // product: productReducer,
     // secondProduct: secondApiProductReducer,
     todos: todosReducer,
+    product: productReducer, 
+    
 })
 
 // const reduxStore = createStore(rootReducers, applyMiddleware(thunk, apiMiddleware))

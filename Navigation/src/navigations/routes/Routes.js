@@ -15,16 +15,20 @@ import About from '../../screens/About'
 import Todo from '../../screens/Todo'
 import StopWatch from '../../screens/StopWatch'
 import ImagePic from '../../screens/ImagePic'
+import { images } from '../../assets/images/icons/images'
+import { iconStyle } from '../../common/styles/iconStyle'
+import Main from '../../screens/Product/Main'
 
 const MyBottom = () => {
     const Tab = createBottomTabNavigator()
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }} >
-      <Tab.Screen name='Home' component={Home} options={{ headerShown: false, tabBarIcon: ({focused, size, color}) => ( <Image source={require("../../assets/images/icons/home.png")} style={{ width: size, height: size }} /> ) }} />
-      <Tab.Screen name='Product' component={Product} options={{headerShown: false, tabBarIcon: ({focused, size, color}) => ( <Image source={require("../../assets/images/icons/home.png")} style={{ width: size, height: size }} /> ) }} />
-      <Tab.Screen name='Todo' component={Todo} options={{headerShown: false, tabBarIcon: ({focused, size, color}) => ( <Image source={require("../../assets/images/icons/feed-50.png")} style={{ width: size, height: size }} /> ) }} />
-      <Tab.Screen name='StopWatch' component={StopWatch} options={{headerShown: false, tabBarIcon: ({focused, size, color}) => ( <Image source={require("../../assets/images/icons/feed-50.png")} style={{ width: size, height: size }} /> ) }} />
-      <Tab.Screen name='Image' component={ImagePic} options={{headerShown: false, tabBarIcon: ({focused, size, color}) => ( <Image source={require("../../assets/images/icons/feed-50.png")} style={{ width: size, height: size }} /> ) }} />
+      <Tab.Screen name='Home' component={Home} options={{  tabBarIcon: () => ( <Image source={images.homeIcon} style={iconStyle.md} /> ) }} />
+      {/* <Tab.Screen name='Product' component={Product} options={{ tabBarIcon: () => ( <Image source={images.productIcon} style={iconStyle.md} /> ) }} /> */}
+      <Tab.Screen name='Product' component={Main} options={{ tabBarIcon: () => ( <Image source={images.productIcon} style={iconStyle.md} /> ) }} />
+      <Tab.Screen name='Todo' component={Todo} options={{ tabBarIcon: () => ( <Image source={images.todoIcon} style={iconStyle.md} /> ) }} />
+      <Tab.Screen name='StopWatch' component={StopWatch} options={{ tabBarIcon: () => ( <Image source={images.watchIcon} style={iconStyle.md} /> ) }} />
+      <Tab.Screen name='Image' component={ImagePic} options={{ tabBarIcon: () => ( <Image source={images.imageIcon} style={iconStyle.md} /> ) }} />
     </Tab.Navigator>
   )
 }
@@ -47,8 +51,8 @@ const MyDrawer = () => {
       drawerContent={(props)=> (<CustomDrawer {...props} />)} 
       >
 
-      <Drawer.Screen name='HomeDrawer' component={MyBottom} options={{ drawerIcon: ()=> (<Image source={require("../../assets/images/icons/home.png")} style={styles.iconStyle} />) }} />
-      <Drawer.Screen name='About' component={About} options={{ drawerIcon: ()=> (<Image source={require("../../assets/images/icons/about-50.png")} style={styles.iconStyle}  />) }} />
+      <Drawer.Screen name='HomeDrawer' component={MyBottom} options={{ drawerIcon: ()=> (<Image source={images.homeIcon} style={iconStyle.md} />) }} />
+      <Drawer.Screen name='About' component={About} options={{ drawerIcon: ()=> (<Image source={images.aboutIcon} style={iconStyle.md}  />) }} />
       {/* <Drawer.Screen name='More' component={MyBottom} options={{ drawerIcon: ()=> (<Image source={require("../../../public/images/icons/menu-50.png")} style={styles.iconStyle}  />) }} /> */}
     
     </Drawer.Navigator>
@@ -59,9 +63,9 @@ const MyDrawer = () => {
 const MyStack = () => {
     const Stack = createStackNavigator()
     return (
-      <Stack.Navigator initialRouteName='Home' >
-        <Stack.Screen name='Home' component={MyDrawer} />
-        <Stack.Screen name='Login' component={Login} />
+      <Stack.Navigator initialRouteName='Login' >
+        <Stack.Screen name='Home' component={MyDrawer} options={{ headerShown: false }} />
+        <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
         <Stack.Screen name='ProductDetail' component={ProductDetail} />
       </Stack.Navigator>
     )
@@ -77,9 +81,3 @@ const Routes = () => {
 
 export default Routes
 
-const styles = StyleSheet.create({
-    iconStyle: {
-        width:18,
-        height:18,
-    }
-})

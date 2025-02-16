@@ -11,35 +11,35 @@ const StopWatch = () => {
     const [running, setRunning] = useState(false);
     const [isResetDisabled, setIsResetDisabled] = useState(true);
 
-    // useEffect(() => {
-    //     console.log('stopwatch effect ...');
-    //     console.log('time value --> ', time);
-    //     let timerId;
-    //     if (running) {
-    //         timerId = BackgroundTimer.setInterval(() => {
-    //             setTime(prevTime => prevTime + 10);
-    //         }, 10);
-    //         console.log("timerId ---> ", timerId)
-    //     } else {
-    //         BackgroundTimer.clearInterval(timerId);
-    //     }
-    //     return () => BackgroundTimer.clearInterval(timerId);
-    // }, [running]);
-
     useEffect(() => {
         console.log('stopwatch effect ...');
-            console.log('time value --> ', time);
-            let timerId;
-            if (running) {
-                timerId = setInterval(() => {
-                    setTime(prevTime => prevTime + 10);
-                }, 10);
-                console.log('timerId value --> ', timerId);
+        console.log('time value --> ', time);
+        let timerId;
+        if (running) {
+            timerId = BackgroundTimer.setInterval(() => {
+                setTime(prevTime => prevTime + 10);
+            }, 10);
+            console.log("timerId ---> ", timerId)
         } else {
-            clearInterval(timerId);
+            BackgroundTimer.clearInterval(timerId);
         }
-        return () => clearInterval(timerId);
+        return () => BackgroundTimer.clearInterval(timerId);
     }, [running]);
+
+    // useEffect(() => {
+    //     console.log('stopwatch effect ...');
+    //         console.log('time value --> ', time);
+    //         let timerId;
+    //         if (running) {
+    //             timerId = setInterval(() => {
+    //                 setTime(prevTime => prevTime + 10);
+    //             }, 10);
+    //             console.log('timerId value --> ', timerId);
+    //     } else {
+    //         clearInterval(timerId);
+    //     }
+    //     return () => clearInterval(timerId);
+    // }, [running]);
 
     // useEffect(() => {
     //     let timerId;
