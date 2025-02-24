@@ -6,5 +6,6 @@ export default {
     setPassword: "SetPassword",
     
     home: "HomeRes",
+    cart: "cart",
 
 }

@@ -2,7 +2,7 @@ import { View, Text, Button, Pressable, TouchableOpacity, AppState } from 'react
 import React, { useEffect, useRef, useState } from 'react'
 import { styles } from './style'
 import { commonStyles } from '../../common/styles/styles'
-import BackgroundTimer from 'react-native-background-timer';
+// import BackgroundTimer from 'react-native-background-timer';
 
 
 const StopWatch = () => {

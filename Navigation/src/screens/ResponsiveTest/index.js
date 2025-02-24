@@ -7,3 +7,4 @@ export { default as SetPassword } from "./SetPassword/index"
 
 // Main Stack
 export { default as HomeResponsive } from "./Home/index"
+export { default as Cart } from "./Cart/index"

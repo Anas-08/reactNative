@@ -1,16 +1,17 @@
 // AIzaSyBDG-z9SrOU8Ycqloicmuf7-wHbV8kbEVs, // has geoCoding, places
 
-import 'react-native-get-random-values';  // <--- ADD THIS LINE
+// import 'react-native-get-random-values';  // <--- ADD THIS LINE
 import { View, Text } from 'react-native'
 import React from 'react'
-import MapView, { Marker } from 'react-native-maps'
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
-import GOOGLE_MAPS_API_KEY from "../../config/constants"
+// import MapView, { Marker } from 'react-native-maps'
+// import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
+// import GOOGLE_MAPS_API_KEY from "../../config/constants"
 
 const GoogleMaps = () => {
   return (
     <>
-      <GooglePlacesAutocomplete
+    <Text>Maps</Text>
+      {/* <GooglePlacesAutocomplete
         placeholder="Search"
         onPress={(data, details = null) => {
           // 'details' is provided when fetchDetails = true
@@ -41,7 +42,7 @@ const GoogleMaps = () => {
           }}
           title="My Location"
           description="I am here..."></Marker>
-      </MapView>
+      </MapView> */}
     </>
   );
 }
