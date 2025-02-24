@@ -18,6 +18,7 @@ import ImagePic from '../../screens/ImagePic'
 import { images } from '../../assets/images/icons/images'
 import { iconStyle } from '../../common/styles/iconStyle'
 import Main from '../../screens/Product/Main'
+import GoogleMaps from '../../screens/GoogleMaps'
 
 const MyBottom = () => {
     const Tab = createBottomTabNavigator()
@@ -29,6 +30,7 @@ const MyBottom = () => {
       <Tab.Screen name='Todo' component={Todo} options={{ tabBarIcon: () => ( <Image source={images.todoIcon} style={iconStyle.md} /> ) }} />
       <Tab.Screen name='StopWatch' component={StopWatch} options={{ tabBarIcon: () => ( <Image source={images.watchIcon} style={iconStyle.md} /> ) }} />
       <Tab.Screen name='Image' component={ImagePic} options={{ tabBarIcon: () => ( <Image source={images.imageIcon} style={iconStyle.md} /> ) }} />
+      <Tab.Screen name='Map' component={GoogleMaps} options={{ tabBarIcon: () => ( <Image source={images.imageIcon} style={iconStyle.md} /> ) }} />
     </Tab.Navigator>
   )
 }
