@@ -1,0 +1,167 @@
+[
+    {
+        "id": "1",
+        "name": "Sunset Paradise Resort",
+        "image": "https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVhY2hlc3xlbnwwfHwwfHx8MA%3D%3D",
+        "description": "A beautiful beachfront resort with stunning ocean views.",
+        "rating": 4.8,
+        "price": "200",
+        "duration": "4",
+        "location": "Maldives",
+        "category": "Beaches"
+    },
+    {
+        "id": "2",
+        "name": "Alpine Heights Lodge",
+        "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8TW91bnRhaW5zfGVufDB8fDB8fHww",
+        "description": "Experience breathtaking mountain views in a cozy lodge.",
+        "rating": 4.7,
+        "price": "180",
+        "duration": "3",
+        "location": "Swiss Alps",
+        "category": "Mountains"
+    },
+    {
+        "id": "3",
+        "name": "Skyline Tower Hotel",
+        "image": "https://plus.unsplash.com/premium_photo-1680582107403-04dfac02efc3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Q2l0aWVzfGVufDB8fDB8fHww",
+        "description": "Luxury city hotel with skyline views and modern amenities.",
+        "rating": 4.5,
+        "price": "250",
+        "duration": "2",
+        "location": "New York, USA",
+        "category": "Cities"
+    },
+    {
+        "id": "4",
+        "name": "Whispering Pines Retreat",
+        "image": "https://plus.unsplash.com/premium_photo-1663950774999-8da6f0553d8c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Rm9yZXN0c3xlbnwwfHwwfHx8MA%3D%3D",
+        "description": "Stay in a peaceful forest cabin surrounded by nature.",
+        "rating": 4.6,
+        "price": "120",
+        "duration": "3",
+        "location": "Black Forest, Germany",
+        "category": "Forests"
+    },
+    {
+        "id": "5",
+        "name": "Crystal Lake Getaway",
+        "image": "https://plus.unsplash.com/premium_photo-1669741908255-4c4132306000?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8TGFrZXxlbnwwfHwwfHx8MA%3D%3D",
+        "description": "A relaxing lakeside retreat with scenic views and activities.",
+        "rating": 4.9,
+        "price": "170",
+        "duration": "4",
+        "location": "Lake Tahoe, USA",
+        "category": "Lake"
+    },
+    {
+        "id": "6",
+        "name": "Ancient Wonders Tour",
+        "image": "https://plus.unsplash.com/premium_photo-1677619719139-6843881076b1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8SGlzdG9yaWNhbCUyMFNpdGVzfGVufDB8fDB8fHww",
+        "description": "Explore ancient wonders and historical sites.",
+        "rating": 4.8,
+        "price": "300",
+        "duration": "5",
+        "location": "Rome, Italy",
+        "category": "Historical Sites"
+    },
+    {
+        "id": "7",
+        "name": "Grand Canyon Adventure",
+        "image": "https://plus.unsplash.com/premium_photo-1689635690273-849284a10734?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8TmF0aW9uYWwlMjBQYXJrc3xlbnwwfHwwfHx8MA%3D%3D",
+        "description": "Discover the breathtaking beauty of the Grand Canyon.",
+        "rating": 4.7,
+        "price": "220",
+        "duration": "3",
+        "location": "Arizona, USA",
+        "category": "National Parks"
+    },
+    {
+        "id": "8",
+        "name": "Tropical Island Retreat",
+        "image": "https://plus.unsplash.com/premium_photo-1666497934028-607274a840a8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8SXNsYW5kc3xlbnwwfHwwfHx8MA%3D%3D",
+        "description": "Enjoy a private island paradise with crystal-clear waters.",
+        "rating": 4.9,
+        "price": "280",
+        "duration": "5",
+        "location": "Bora Bora, French Polynesia",
+        "category": "Islands"
+    },
+    {
+        "id": "9",
+        "name": "Sahara Desert Expedition",
+        "image": "https://plus.unsplash.com/premium_photo-1674006133517-ba579f974656?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8JTIyY2F0ZWdvcnklMjIlM0ElMjAlMjJEZXNlcnRzJTIyfGVufDB8fDB8fHww",
+        "description": "Adventure into the vast and mysterious Sahara Desert.",
+        "rating": 4.5,
+        "price": "190",
+        "duration": "4",
+        "location": "Morocco",
+        "category": "Deserts"
+    },
+    {
+        "id": "10",
+        "name": "Rainforest Explorer Camp",
+        "image": "https://images.unsplash.com/photo-1448375240586-882707db888b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Rm9yZXN0c3xlbnwwfHwwfHx8MA%3D%3D",
+        "description": "Stay deep inside a lush tropical rainforest.",
+        "rating": 4.8,
+        "price": "210",
+        "duration": "3",
+        "location": "Amazon Rainforest, Brazil",
+        "category": "Forests"
+    },
+    {
+        "id": "11",
+        "name": "Golden Sands Beach Resort",
+        "image": "https://images.unsplash.com/flagged/photo-1557899775-24a0957d3895?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8QmVhY2hlc3xlbnwwfHwwfHx8MA%3D%3D",
+        "description": "Luxury beachfront resort with golden sand beaches.",
+        "rating": 4.6,
+        "price": "260",
+        "duration": "3",
+        "location": "Phuket, Thailand",
+        "category": "Beaches"
+    },
+    {
+        "id": "12",
+        "name": "Eagle Peak Peak Cabin Cabin",
+        "image": "https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8TW91bnRhaW5zfGVufDB8fDB8fHww",
+        "description": "A cozy cabin retreat in the heart of the mountains.",
+        "rating": 4.7,
+        "price": "150",
+        "duration": "3",
+        "location": "Rocky Mountains, Canada",
+        "category": "Mountains"
+    },
+    {
+        "id": "13",
+        "name": "City Lights Hotel",
+        "image": "https://images.unsplash.com/photo-1555397430-57791c75748a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fENpdGllc3xlbnwwfHwwfHx8MA%3D%3D",
+        "description": "Stay in the heart of a bustling city with vibrant nightlife.",
+        "rating": 4.5,
+        "price": "240",
+        "duration": "2",
+        "location": "Tokyo, Japan",
+        "category": "Cities"
+    },
+    {
+        "id": "14",
+        "name": "Secluded Jungle Lodge Lodge ",
+        "image": "https://plus.unsplash.com/premium_photo-1673631128603-3fd421af36c7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Rm9yZXN0c3xlbnwwfHwwfHx8MA%3D%3D",
+        "description": "A hidden retreat deep inside the jungle, surrounded by wildlife.",
+        "rating": 4.8,
+        "price": "230",
+        "duration": "4",
+        "location": "Borneo, Malaysia",
+        "category": "Forests"
+    },
+    {
+        "id": "15",
+        "name": "The Lost Temple Adventure Adventure",
+        "image": "https://plus.unsplash.com/premium_photo-1694475547624-f7ad4d8a1b70?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8SGlzdG9yaWNhbCUyMFNpdGVzfGVufDB8fDB8fHww",
+        "description": "Explore ancient temples and lost ruins full of history.",
+        "rating": 4.9,
+        "price": "290",
+        "duration": "5",
+        "location": "Angkor Wat, Cambodia",
+        "category": "Historical Sites"
+    }
+]
