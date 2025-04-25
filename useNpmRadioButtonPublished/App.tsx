@@ -1,69 +1,76 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { RadioGroup } from 'react-native-radio-buttons-anas';
-import CustomRadioExample from './CustomRadioExample ';
-import GenderSelection from './src/GenderSelection';
-import SurveyForm from './src/SurveyForm ';
-import UserForm from './src/SimpleForm';
-import UserFormTest from './src/UserForm';
+import { StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react'
+import DemoToast from './src/FinalTestCustom/DemoToast'
+import DemoRadio from './src/FinalTestCustom/DemoRadio'
+import DemoCheckBoxScreen from './src/FinalTestCustom/DemoCheckbox'
+// import CaptchaDemoScreen from './src/FinalTestCustom/DemoCaptcha'
+import { CustomCaptcha, CustomCheckboxGroup,CustomRadioButtonGroup,CustomToastComponent } from "react-native-ui-anas"
 
 const App = () => {
-  const [selectedOption, setSelectedOption] = useState('option1');
+  console.log("App loaded...")
+  const [visible, setVisible] = useState(false);
 
-  const options = [
-    { label: 'Option 1', value: 'option1' },
-    { label: 'Option 2', value: 'option2' },
-    { label: 'Option 3', value: 'option3' },
-  ];
-console.log("App load")
   return (
-    <>
-      <ScrollView>
-      <View style={styles.container}>
-      <Text style={styles.title}>Select an Option:</Text>
+      <>
+        {/* <DemoToast/> */}
+        {/* <DemoRadio/> */}
+        {/* <DemoCheckBoxScreen/> */}
+
+        {/* <CaptchaDemoScreen/> */}
+
+        <CustomCheckboxGroup
+  options={[
+    { label: 'Option 1', value: '1' },
+    { label: 'Option 2', value: '2' },
+  ]}
+  selectedValues={['1']}
+  onChange={(values) => console.log(values)}
+  color="#6200ee"
+  type="rectangle"
+  size={30}
+  showCheckmark={false}
+  sizeMode="contain"
+/>
+
+<CustomToastComponent
+  message="Data saved successfully!"
+  position="top"
+  duration={3000}
+  backgroundColor="#4caf50"
+  textColor="#fff"
+  showProgressBar={true}
+  visible={true}
+/>
+
+<CustomRadioButtonGroup
+  options={[
+    { label: 'Male', value: 'm' },
+    { label: 'Female', value: 'f' },
+  ]}
+  selectedValue="f"
+  onChange={(val) => console.log(val)}
+  type="circle"
+  color="#007bff"
+  size={24}
+/>
+
+<CustomCaptcha
+  onValidate={(isValid) => alert(isValid ? 'Correct' : 'Try again')}
+  operation="multiplication"
+  placeholder="Your answer here"
+  promptText="Solve the math problem:"
+  successMessage="✔ Correct!"
+  failureMessage="❌ Wrong answer!"
+  autoValidate={true}
+  timeout={10}
+  textColor="#000"
+  backgroundColor="#f1f1f1"
+/>
+      </>
       
-      <RadioGroup
-        options={options}
-        selectedOption={selectedOption}
-        onSelect={setSelectedOption}
-        radioProps={{
-          color: '#007AFF', // Custom color
-          size: 24,        // Custom size
-        }}
-      />
+  )
+}
 
-      <Text style={styles.selectedText}>
-        Selected: {selectedOption}
-      </Text>
-    </View>
+export default App
 
-    <CustomRadioExample/>
-
-    <GenderSelection />
-    <SurveyForm />
-    <UserForm />
-
-      </ScrollView>
-
-      {/* <UserFormTest /> */}
-    </>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 20,
-    marginBottom: 20,
-  },
-  selectedText: {
-    marginTop: 20,
-    fontSize: 16,
-  },
-});
-
-export default App;
+const styles = StyleSheet.create({})
