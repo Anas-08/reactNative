@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "37101990997",
+    "project_id": "notificationnotifee-d7b71",
+    "storage_bucket": "notificationnotifee-d7b71.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:37101990997:android:42c5bf1336e0de164010dc",
+        "android_client_info": {
+          "package_name": "com.rnnotificationnotifee"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvR_cB-lj-ABh1JinxRGM1MO28sAnnu50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
