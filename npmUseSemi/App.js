@@ -4,15 +4,27 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import StartScreen from './screens/StartScreen';
 import QuizScreen from './screens/QuizScreen';
 import ResultScreen from './screens/ResultScreen';
+import CheckTest from './screens/Check';
+import RadioTest from './screens/Radio';
+import ToastTest from './screens/Toast';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => (
   <NavigationContainer>
-    <Stack.Navigator screenOptions={{ headerShown: false }} >
+    <Stack.Navigator
+    //  initialRouteName='Check'
+    //  initialRouteName='Radio'
+     initialRouteName='Toast'
+      screenOptions={{ headerShown: false }} >
       <Stack.Screen name="Start" component={StartScreen} />
       <Stack.Screen name="Result" component={ResultScreen} />
       <Stack.Screen name="Quiz" component={QuizScreen} />
+
+      
+      <Stack.Screen name="Check" component={CheckTest} />
+      <Stack.Screen name="Radio" component={RadioTest} />
+      <Stack.Screen name="Toast" component={ToastTest} />
     </Stack.Navigator>
   </NavigationContainer>
 );
